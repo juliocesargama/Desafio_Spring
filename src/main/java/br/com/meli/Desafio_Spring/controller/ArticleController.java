@@ -42,7 +42,6 @@ public class ArticleController {
 
     @GetMapping("/articles")
     public ResponseEntity<List<ArticleDTO>> returnCategory(@RequestParam String category) {
-        System.out.println("inicio endpoint");
         ArticleDTO dto = new ArticleDTO();
         List<ArticleDTO> result = dto.convert(articleService.findByCategory(category));
         return ResponseEntity.ok(result);
