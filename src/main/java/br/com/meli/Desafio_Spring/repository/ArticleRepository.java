@@ -30,4 +30,8 @@ public class ArticleRepository {
             e.printStackTrace();
         }
     }
+
+    public List<Article> getAll() {
+        return articles;
+    }
 }
