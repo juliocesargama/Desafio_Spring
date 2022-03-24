@@ -4,17 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cliente {
-
-
+public class Client {
     private long id;
     private String name;
     private String email;
-    private Federacao federacao;
+    private UF uf;
+
+    public Client(String name, String email, UF uf) {
+        this.name = name;
+        this.email = email;
+        this.uf = uf;
+    }
 }
