@@ -11,33 +11,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ClienteRepository {
+public class ClientRepository {
 
-    private List<Client> clients;
-
-    private final String FILE_PATH="src/main/resources/clientes.json";
+    private final String FILE_PATH="src/main/resources/clients.json";
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public ClienteRepository() {
-        this.clients = new ArrayList<>();
-        getAllClientes();
-    }
-
-    public void getAllClientes(){
+    public List<Client> getAll() {
         try {
-            clients.addAll(mapper.readValue(new File(FILE_PATH), new TypeReference<List<Client>>(){}));
+            List<Client> clients = mapper.readValue(new File(FILE_PATH), new TypeReference<List<Client>>(){});
+            return clients;
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    public List<Client> getAll() {
-        return clients;
+        return new ArrayList<>();
     }
 
     public Client save(Client client) {
-        client.setId(clients.size() + 1);
-        clients.add(client);
+        List<Client> allClient;
+        try {
+            allClient = getAll();
+            client.setId(allClient.size() + 1);
+            allClient.add(client);
+            mapper.writeValue(new File(FILE_PATH), allClient);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return client;
     }
 }
