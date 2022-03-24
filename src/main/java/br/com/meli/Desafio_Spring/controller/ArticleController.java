@@ -36,9 +36,16 @@ public class ArticleController {
         return new ResponseEntity<>(new ResponseArticleDTO(articleDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping("/articles")
+    @GetMapping("/articles/")
     public List<Article> getAllArticles() {
         return articleService.findAll();
+    }
+
+    @GetMapping("/articles")
+    public ResponseEntity<List<ArticleDTO>> returnCategory(@RequestParam String category) {
+        ArticleDTO dto = new ArticleDTO();
+        List<ArticleDTO> result = dto.convert(articleService.findByCategory(category));
+        return ResponseEntity.ok(result);
     }
 
 }
