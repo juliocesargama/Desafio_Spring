@@ -13,6 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -41,7 +48,17 @@ public class ArticleController {
     }
 
     @GetMapping("/articles")
-    public ResponseEntity<List<ArticleDTO>> returnCategory(@RequestParam String category) {
+    @ResponseBody
+    public Stream<Article> getByFilters(@RequestParam MultiValueMap<String, String> params) {
+
+        Stream<Article> articles = articleService.searchArticlesByFilters(params);
+
+        return articles;
+    
+    }
+    
+    @GetMapping("/articles")
+    public ResponseEntity<List<ArticleDTO>> returnCategory(@RequestParam(required = false) String category) {
         System.out.println("inicio endpoint");
         ArticleDTO dto = new ArticleDTO();
         List<ArticleDTO> result = dto.convert(articleService.findByCategory(category));

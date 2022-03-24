@@ -5,10 +5,12 @@ import br.com.meli.Desafio_Spring.repository.ArticleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -44,4 +46,14 @@ public class ArticleService {
         return articleRepository.getAll().stream()
                 .anyMatch(a -> a.getCategory().equalsIgnoreCase(category));
     }
+
+    public Stream<Article> searchArticlesByFilters(MultiValueMap<String, String> params) {
+        
+        return articleRepository.getAll().stream()
+                .filter(a -> params.get("category").contains(a.getCategory()))
+                .filter(a -> params.get("brand").contains(a.getBrand()))
+                .filter(a -> params.get("freeShipping").contains(a.getFreeShipping().toString()))
+                .filter(a -> params.get("prestige").contains(a.getPrestige()));
+            } 
+
 }
