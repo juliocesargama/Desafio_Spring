@@ -1,6 +1,7 @@
 package br.com.meli.Desafio_Spring.repository;
 
 import br.com.meli.Desafio_Spring.entity.Client;
+import br.com.meli.Desafio_Spring.entity.UF;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ClientRepository {
@@ -38,5 +40,12 @@ public class ClientRepository {
             e.printStackTrace();
         }
         return client;
+    }
+
+    public List<Client> findByUf(UF uf) {
+        List<Client> allClient = getAll();
+        List<Client> clientStream = allClient.stream().filter(client ->  client.getUf() == uf).collect(Collectors.toCollection(ArrayList::new));
+
+        return clientStream;
     }
 }
