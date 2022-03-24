@@ -15,6 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 @RestController
 @RequestMapping("/api/v1")
 @AllArgsConstructor
@@ -42,10 +48,13 @@ public class ArticleController {
     }
 
     @GetMapping("/articles")
-    public ResponseEntity<List<ArticleDTO>> returnCategory(@RequestParam String category) {
-        ArticleDTO dto = new ArticleDTO();
-        List<ArticleDTO> result = dto.convert(articleService.findByCategory(category));
-        return ResponseEntity.ok(result);
+    @ResponseBody
+    public List<Article> getByFilters(@RequestParam MultiValueMap<String, String> params) {
+
+        List<Article> articles = articleService.searchArticlesByFilters(params);
+
+        return articles;
+    
     }
 
 }
