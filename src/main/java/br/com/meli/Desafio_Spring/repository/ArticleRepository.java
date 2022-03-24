@@ -31,9 +31,13 @@ public class ArticleRepository {
         }
     }
 
-    public Article save(Article article){
-        article.setProductId(articles.size() +1);
+    public List<Article> getAll() {
+        return articles;
+    }
+
+    public Article save(Article article) {
+        article.setProductId(articles.size() + 1);
         articles.add(article);
-        return  article;
+        return article;
     }
 }
