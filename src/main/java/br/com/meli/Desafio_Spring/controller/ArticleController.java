@@ -3,6 +3,7 @@ package br.com.meli.Desafio_Spring.controller;
 import br.com.meli.Desafio_Spring.dto.ArticleDTO;
 
 import br.com.meli.Desafio_Spring.dto.RequestArticleDTO;
+import br.com.meli.Desafio_Spring.dto.ResponseArticleDTO;
 import br.com.meli.Desafio_Spring.entity.Article;
 import br.com.meli.Desafio_Spring.service.ArticleService;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class ArticleController {
     private final ModelMapper modelMapper;
 
     @PostMapping("/insert-articles-request")
-    public ResponseEntity<List<ArticleDTO>> createArticles(@RequestBody RequestArticleDTO requestArticleDTO) {
+    public ResponseEntity<?> createArticles(@RequestBody RequestArticleDTO requestArticleDTO) {
         List<Article> articles = requestArticleDTO.getArticles().stream()
                 .map(article -> modelMapper.map(article, Article.class))
                 .collect(Collectors.toList());
@@ -32,7 +33,7 @@ public class ArticleController {
         List<ArticleDTO> articleDTO = savedArticle.stream().map(article -> modelMapper.map(article, ArticleDTO.class))
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<List<ArticleDTO>>(articleDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(new ResponseArticleDTO(articleDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/articles/")
@@ -46,4 +47,5 @@ public class ArticleController {
         List<ArticleDTO> result = dto.convert(articleService.findByCategory(category));
         return ResponseEntity.ok(result);
     }
+
 }
