@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,12 +55,5 @@ public class ArticleController {
         return articles;
     
     }
-    
-//    @GetMapping("/articles")
-//    public ResponseEntity<List<ArticleDTO>> returnCategory(@RequestParam(required = false) String category) {
-//        System.out.println("inicio endpoint");
-//        ArticleDTO dto = new ArticleDTO();
-//        List<ArticleDTO> result = dto.convert(articleService.findByCategory(category));
-//        return ResponseEntity.ok(result);
-//    }
+
 }

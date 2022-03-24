@@ -10,7 +10,6 @@ import org.springframework.util.MultiValueMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -70,13 +69,6 @@ public class ArticleService {
                     .filter(a -> params.get("prestige").get(0).equalsIgnoreCase(a.getPrestige()))
                     .collect(Collectors.toList());
         }
-
-//                .filter(a -> params.get("category").get(0).contains(a.getCategory()))
-//                .filter(a -> params.get("brand").contains(a.getBrand()))
-//                .filter(a -> params.get("freeShipping").contains(a.getFreeShipping().toString()))
-//                .filter(a -> params.get("prestige").contains(a.getPrestige()))
-//                .filter(a -> findAll(params.get("order")))
-//                .collect(Collectors.toList());
 
         if (params.get("order").get(0).equals("0")) {
             return filterByAlphabetReverse(list);
