@@ -13,10 +13,6 @@ import java.util.List;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
-    public Article save(Article article) {
-        return articleRepository.save(article);
-    }
-
     public List<Article> save(List<Article> articles) {
         List<Article> articleCreated  = new ArrayList<Article>();
 
