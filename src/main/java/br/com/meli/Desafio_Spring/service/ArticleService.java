@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -30,4 +31,17 @@ public class ArticleService {
         return articleCreated;
     }
 
+    public List<Article> findByCategory(String category) {
+        if (!categoryExists(category)){
+            throw new RuntimeException("Categoria não existe");
+        }
+        return articleRepository.getAll().stream()
+                .filter(a -> a.getCategory().equalsIgnoreCase(category))
+                .collect(Collectors.toList());
+    }
+
+    public boolean categoryExists(String category) {
+        return articleRepository.getAll().stream()
+                .anyMatch(a -> a.getCategory().equalsIgnoreCase(category));
+    }
 }
