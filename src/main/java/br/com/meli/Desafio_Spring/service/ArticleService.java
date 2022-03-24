@@ -90,7 +90,9 @@ public class ArticleService {
     }
 
     public List<Article> filterByLowerPrice(List<Article> list){
-        return list;
+        return list.stream()
+                .sorted((o1, o2) -> o1.getPrice().compareTo(o2.getPrice()))
+                .collect(Collectors.toList());
     }
 
     public List<Article> filterByAlphabet(List<Article> list){
