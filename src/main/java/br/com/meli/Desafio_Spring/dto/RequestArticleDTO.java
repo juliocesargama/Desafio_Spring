@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TesteDTO {
+public class RequestArticleDTO {
     private List<ArticleInputDTO> articles;
 }
 
