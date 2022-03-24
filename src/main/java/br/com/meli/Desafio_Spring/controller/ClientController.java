@@ -2,6 +2,7 @@ package br.com.meli.Desafio_Spring.controller;
 
 import br.com.meli.Desafio_Spring.dto.ClientDTO;
 import br.com.meli.Desafio_Spring.entity.Client;
+import br.com.meli.Desafio_Spring.entity.UF;
 import br.com.meli.Desafio_Spring.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,8 +28,11 @@ public class ClientController {
     }
 
     @GetMapping("/clients")
-    public List<Client> getAllClients() {
-        return clientService.findAll();
+    public ResponseEntity<List<Client>> getClients(@RequestParam UF uf) {
+        List<Client> clientes;
+        clientes = uf != null ?  clientService.findByUf(uf) : clientService.findAll();
+
+        return ResponseEntity.ok(clientes);
     }
 
 }
