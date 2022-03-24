@@ -51,4 +51,8 @@ public class Article {
     }
  
 
+    public Article(Article origArticle) {
+        this(origArticle.productId, origArticle.name, origArticle.category, origArticle.brand,
+                origArticle.price, origArticle.quantity, origArticle.freeShipping, origArticle.prestige);
+    }
 }
