@@ -30,6 +30,9 @@ public class PurchaseService {
             throw new MissingArticleQuantityException("quantidade insulficiente");
         }
 
+        // update quantity
+        updateArticleListAndSave(articlesFromPurchase);
+
         Purchase purchase = new Purchase(articlesFromPurchase);
         purchaseRepository.save(purchase);
         return purchase;
@@ -57,5 +60,25 @@ public class PurchaseService {
         article.setQuantity(purchaseArticleDTO.getQuantity());
 
         return article;
+    }
+
+    public void updateArticleQuantity(Article article){
+
+        List<Article> list = articleRepository.getAll();
+
+        for (int i = 0; i < list.size() ; i++) {
+
+            if (list.get(i).getProductId() == article.getProductId()){
+                list.get(i).setQuantity(list.get(i).getQuantity() - article.getQuantity());
+                articleRepository.update(list.get(i), i);
+                return;
+            }
+        }
+    }
+
+    public void updateArticleListAndSave(List<Article> articles){
+        for (Article a : articles) {
+            updateArticleQuantity(a);
+        }
     }
 }
