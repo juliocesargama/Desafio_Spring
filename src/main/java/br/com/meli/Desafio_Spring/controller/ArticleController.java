@@ -49,19 +49,19 @@ public class ArticleController {
 
     @GetMapping("/articles")
     @ResponseBody
-    public Stream<Article> getByFilters(@RequestParam MultiValueMap<String, String> params) {
+    public List<Article> getByFilters(@RequestParam MultiValueMap<String, String> params) {
 
-        Stream<Article> articles = articleService.searchArticlesByFilters(params);
+        List<Article> articles = articleService.searchArticlesByFilters(params);
 
         return articles;
     
     }
     
-    @GetMapping("/articles")
-    public ResponseEntity<List<ArticleDTO>> returnCategory(@RequestParam(required = false) String category) {
-        System.out.println("inicio endpoint");
-        ArticleDTO dto = new ArticleDTO();
-        List<ArticleDTO> result = dto.convert(articleService.findByCategory(category));
-        return ResponseEntity.ok(result);
-    }
+//    @GetMapping("/articles")
+//    public ResponseEntity<List<ArticleDTO>> returnCategory(@RequestParam(required = false) String category) {
+//        System.out.println("inicio endpoint");
+//        ArticleDTO dto = new ArticleDTO();
+//        List<ArticleDTO> result = dto.convert(articleService.findByCategory(category));
+//        return ResponseEntity.ok(result);
+//    }
 }
