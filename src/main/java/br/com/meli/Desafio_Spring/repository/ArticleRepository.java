@@ -30,4 +30,10 @@ public class ArticleRepository {
             e.printStackTrace();
         }
     }
+
+    public Article save(Article article){
+        article.setProductId(articles.size() +1);
+        articles.add(article);
+        return  article;
+    }
 }
