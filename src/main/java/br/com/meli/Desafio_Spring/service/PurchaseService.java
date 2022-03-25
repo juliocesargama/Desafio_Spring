@@ -2,6 +2,7 @@ package br.com.meli.Desafio_Spring.service;
 
 import br.com.meli.Desafio_Spring.dto.PurchaseArticleDTO;
 import br.com.meli.Desafio_Spring.entity.Article;
+import br.com.meli.Desafio_Spring.entity.Client;
 import br.com.meli.Desafio_Spring.entity.Purchase;
 import br.com.meli.Desafio_Spring.exception.EntityNotFoundException;
 import br.com.meli.Desafio_Spring.exception.MissingArticleQuantityException;
@@ -11,6 +12,7 @@ import br.com.meli.Desafio_Spring.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -98,6 +100,14 @@ public class PurchaseService {
             clientPurchases.add(purchase);
         }
         return clientPurchases;
+    }
+
+    public BigDecimal findTotal(Long id) {
+        List<Long> ids = clientRepository.findById(id).getIdList();
+
+        List<Purchase> existsPurchase =  purchaseRepository.findByIds(ids);
+
+        return BigDecimal.valueOf(existsPurchase.stream().mapToDouble(p -> p.getTotal().doubleValue()).sum());
     }
 
 }
