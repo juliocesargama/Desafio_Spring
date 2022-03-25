@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -103,7 +104,9 @@ public class ArticleService {
     }
 
     public List<Article> filterByAlphabetReverse(List<Article> list){
-        return list;
+        return list.stream()
+        .sorted(Comparator.comparing(Article::getName).reversed())
+        .collect(Collectors.toList());
     }
 
 }
