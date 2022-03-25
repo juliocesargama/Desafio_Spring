@@ -4,6 +4,8 @@ Uma plataforma de vendas de produtos online deseja melhorar as opções de pesqu
 Para isso, decidiu implementar um motor de busca que, a partir das opções que o utilizador determina, devolve o(s) produto(s) que lhes corresponde. 
 Obs: Os produtos devem ser cadastrados a partir de um payload e armazenados em um arquivo Json.
 
+### Nota: A coleção de endpoints do PostMan encontra-se na pasta: /src/main/java/resources
+
 ## Documentação e referencial:
 
 [Enunciado do Desafio](https://drive.google.com/file/d/1NNDBVNkXHvD-JvUCPColoY0sb_GFTWRZ/view)
