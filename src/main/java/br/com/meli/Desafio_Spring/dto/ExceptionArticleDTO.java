@@ -15,4 +15,5 @@ public class ExceptionArticleDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
     private String message;
+    private String path;
 }
