@@ -37,14 +37,27 @@ public class ArticleRepository {
     }
 
     public Article save(Article article) {
-        article.setProductId(articles.size() + 1);
-        articles.add(article);
+        Article articleFromRepo = getByNameAndCategory(article);
+        if (articleFromRepo == null) {
+            article.setProductId(articles.size() + 1);
+            articles.add(article);
+        } else {
+            articleFromRepo.setQuantity(articleFromRepo.getQuantity() + article.getQuantity());
+        }
         return article;
     }
 
     public Article getById(Article article) {
         return articles.stream().filter(a -> a.getProductId() == article.getProductId())
                 .findFirst().orElse(null);
+    }
+
+    public Article getByNameAndCategory(Article article) {
+        return articles.stream()
+                .filter(a -> a.getName().equalsIgnoreCase(article.getName()))
+                .filter(a -> a.getCategory().equalsIgnoreCase(article.getCategory()))
+                .findFirst()
+                .orElse(null);
     }
 
     public Article update(Article article, int i) {
