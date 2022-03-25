@@ -23,9 +23,7 @@ public class CartDTO {
     public CartDTO convert(Long idClient, ClientRepository clientRepository, PurchaseService purchaseService){
         this.clientName = clientRepository.findById(idClient).getName();
         this.purchases = purchaseService.returnPurchasesByIdClient(idClient);
-//      this.total = BigDecimal.valueOf(articles.stream()
-//                    .mapToDouble(article -> article.getPrice().doubleValue() * article.getQuantity().doubleValue())
-//                    .sum());
+        this.total = purchaseService.findTotal(idClient);
 
         return this;
     }
