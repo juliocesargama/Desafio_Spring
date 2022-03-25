@@ -1,6 +1,7 @@
 package br.com.meli.Desafio_Spring.dto;
 
 import br.com.meli.Desafio_Spring.entity.Purchase;
+import br.com.meli.Desafio_Spring.exception.MissingClientException;
 import br.com.meli.Desafio_Spring.repository.ClientRepository;
 import br.com.meli.Desafio_Spring.service.PurchaseService;
 import lombok.AllArgsConstructor;

@@ -2,6 +2,7 @@ package br.com.meli.Desafio_Spring.service;
 
 import br.com.meli.Desafio_Spring.entity.Client;
 import br.com.meli.Desafio_Spring.entity.UF;
+import br.com.meli.Desafio_Spring.exception.UfNotFoundException;
 import br.com.meli.Desafio_Spring.repository.ClientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +33,5 @@ public class ClientService {
     public Client findByEmail(String email) {
         return repository.findByEmail(email);
     }
+
 }

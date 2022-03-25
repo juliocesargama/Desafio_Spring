@@ -4,6 +4,8 @@ import br.com.meli.Desafio_Spring.entity.Client;
 import br.com.meli.Desafio_Spring.entity.Purchase;
 import br.com.meli.Desafio_Spring.entity.UF;
 import br.com.meli.Desafio_Spring.exception.EntityNotFoundException;
+import br.com.meli.Desafio_Spring.exception.MissingClientException;
+import br.com.meli.Desafio_Spring.exception.UfNotFoundException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Repository;
@@ -40,7 +42,9 @@ public class ClientRepository {
 
     public List<Client> findByUf(UF uf) {
         List<Client> allClient = getAll();
-        List<Client> clientStream = allClient.stream().filter(client ->  client.getUf() == uf).collect(Collectors.toCollection(ArrayList::new));
+        List<Client> clientStream = allClient.stream()
+                .filter(client ->  client.getUf() == uf)
+                .collect(Collectors.toCollection(ArrayList::new));
 
         return clientStream;
     }
@@ -55,7 +59,7 @@ public class ClientRepository {
         List<Client> clientStream = getAll().stream().filter(client ->  client.getId() == id).collect(Collectors.toCollection(ArrayList::new));
 
         if(clientStream.size() == 0)
-            new EntityNotFoundException("Id not found " + id);
+            throw new MissingClientException("Cliente não encontrado: " + id);
 
         return clientStream.get(0);
     }
