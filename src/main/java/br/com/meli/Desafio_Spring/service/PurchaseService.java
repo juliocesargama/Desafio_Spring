@@ -6,10 +6,12 @@ import br.com.meli.Desafio_Spring.entity.Purchase;
 import br.com.meli.Desafio_Spring.exception.EntityNotFoundException;
 import br.com.meli.Desafio_Spring.exception.MissingArticleQuantityException;
 import br.com.meli.Desafio_Spring.repository.ArticleRepository;
+import br.com.meli.Desafio_Spring.repository.ClientRepository;
 import br.com.meli.Desafio_Spring.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,9 @@ public class PurchaseService {
 
     @Autowired
     ArticleRepository articleRepository;
+
+    @Autowired
+    ClientRepository clientRepository;
 
     public Purchase save(List<PurchaseArticleDTO> articleList) {
 
@@ -81,6 +86,18 @@ public class PurchaseService {
         for (Article a : articles) {
             updateArticleQuantity(a);
         }
+    }
+
+    public List<Purchase> returnPurchasesByIdClient(Long id) {
+        List<Purchase> clientPurchases = new ArrayList<>();
+        List<Long> idList = clientRepository.findById(id).getIdList();
+
+        for (int i = 0; i < idList.size(); i++) {
+            int finalI = i;
+            Purchase purchase = purchaseRepository.findById(idList.get(i));
+            clientPurchases.add(purchase);
+        }
+        return clientPurchases;
     }
 
 }

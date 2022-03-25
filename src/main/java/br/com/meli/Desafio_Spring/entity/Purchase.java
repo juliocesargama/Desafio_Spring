@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class Purchase {
-    private long id;
+    private Long id;
     private List<Article> articles;
     private BigDecimal total;
 

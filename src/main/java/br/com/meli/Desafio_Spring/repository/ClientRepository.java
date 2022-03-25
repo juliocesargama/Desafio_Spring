@@ -90,6 +90,7 @@ public class ClientRepository {
         allClient.add(client);
 
         escreverArquivo(allClient);
+
         return client;
     }
 
@@ -100,5 +101,4 @@ public class ClientRepository {
             e.printStackTrace();
         }
     }
-
 }

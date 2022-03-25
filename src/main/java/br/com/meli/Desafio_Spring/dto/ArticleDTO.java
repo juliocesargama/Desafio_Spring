@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class ArticleDTO {
 
-    private long productId;
+    private Long productId;
     private String name;
     private Integer quantity;
 
