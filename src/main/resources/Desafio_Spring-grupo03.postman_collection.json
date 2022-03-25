@@ -76,6 +76,130 @@
 			]
 		},
 		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "retornar todos os clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"felipe\",\n    \"email\": \"felipe@mail\",\n    \"uf\": \"SP\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/insert-client-request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"insert-client-request"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vendas",
+			"item": [
+				{
+					"name": "Retornar as vendas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cart?idclient=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cart"
+							],
+							"query": [
+								{
+									"key": "idclient",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "inserir uma venda",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"articlesPurchaseRequest\":[\n      {\n         \"productId\":1,\n         \"name\":\"Serra de Bancada\",\n         \"brand\":\"FORTGPRO\",\n         \"quantity\":5\n       },\n      {\n         \"productId\":2,\n         \"name\":\"Furadeira\",\n          \"brand\":\"Black & Decker\",\n          \"quantity\":7\n       }\n     ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/purchase-request?id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"purchase-request"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "filtrar por menor preço",
 			"request": {
 				"method": "GET",
@@ -243,7 +367,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/articles?category=Celulares",
+					"raw": "http://localhost:8080/api/v1/articles?brand=Xiaomi",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -256,8 +380,8 @@
 					],
 					"query": [
 						{
-							"key": "category",
-							"value": "Celulares"
+							"key": "brand",
+							"value": "Xiaomi"
 						}
 					]
 				}
