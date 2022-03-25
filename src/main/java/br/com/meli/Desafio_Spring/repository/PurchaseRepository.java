@@ -28,4 +28,13 @@ public class PurchaseRepository {
                 .findFirst().orElseThrow(() -> new EntityNotFoundException("Purchase not found " + id));
     }
 
+    public List<Purchase> findByIds(List<Long> ids ) {
+
+        List<Purchase> filteredPurchase = new ArrayList<>();
+        ids.forEach(id ->{
+            filteredPurchase.add(purchases.stream().filter(p -> p.getId() == id).findFirst().orElseThrow(() -> new EntityNotFoundException("Id not found " + id)));
+        });
+
+        return filteredPurchase;
+    }
 }

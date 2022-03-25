@@ -5,7 +5,7 @@ import br.com.meli.Desafio_Spring.entity.Purchase;
 import br.com.meli.Desafio_Spring.entity.UF;
 import br.com.meli.Desafio_Spring.exception.EntityNotFoundException;
 import br.com.meli.Desafio_Spring.exception.MissingClientException;
-import br.com.meli.Desafio_Spring.exception.UfNotFoundException;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Repository;
