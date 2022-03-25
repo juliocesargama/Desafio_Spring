@@ -1,6 +1,7 @@
 package br.com.meli.Desafio_Spring.service;
 
 import br.com.meli.Desafio_Spring.entity.Article;
+import br.com.meli.Desafio_Spring.exception.ArtifactInvalidOrderException;
 import br.com.meli.Desafio_Spring.repository.ArticleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +81,7 @@ public class ArticleService {
         } else if (params.get("order").get(0).equals("3")) {
             return filterByLowerPrice(list);
         } else {
-            throw new RuntimeException("Order nao existe");
+            throw new ArtifactInvalidOrderException("Order utilizado nao existe");
         }
     }
 
