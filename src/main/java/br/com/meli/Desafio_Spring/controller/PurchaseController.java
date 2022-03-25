@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +37,8 @@ public class PurchaseController {
 
     @PostMapping("/api/v1/purchase-request")
     public ResponseEntity<PurchaseOutputDTO> purchaseArticles(@RequestBody RequestPurchaseDTO purchaseArticleDTOS,
-                                                     @RequestParam long id) {
+                                                              UriComponentsBuilder uriBuilder,
+                                                              @RequestParam long id) {
 
         List<PurchaseArticleDTO> PurchaseArticleDTO = purchaseArticleDTOS.getArticlesPurchaseRequest().stream()
                 .map(purchase -> modelMapper.map(purchase, PurchaseArticleDTO.class))
@@ -48,7 +51,11 @@ public class PurchaseController {
 
         PurchaseOutputDTO dto = new PurchaseOutputDTO();
         dto.convert(purchase, name);
+        URI uri = uriBuilder
+                .path("/api/v1/purchase-request")
+                .buildAndExpand(purchase.getId())
+                .toUri();
 
-        return new ResponseEntity<PurchaseOutputDTO>(dto, HttpStatus.CREATED);
+        return ResponseEntity.created(uri).body(dto);
     }
 }
