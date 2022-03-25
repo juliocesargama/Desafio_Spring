@@ -72,6 +72,10 @@ public class ArticleService {
                     .collect(Collectors.toList());
         }
 
+        if(params.get("order") == null) {
+          return list;
+        }
+
         if (params.get("order").get(0).equals("0")) {
             return filterByAlphabet(list);
         } else if (params.get("order").get(0).equals("1")) {
