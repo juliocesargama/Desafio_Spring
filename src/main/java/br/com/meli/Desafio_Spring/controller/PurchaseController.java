@@ -11,10 +11,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -46,9 +43,11 @@ public class PurchaseController {
         clientRepository.addPurchaseIdToList(purchase, id);
 
         clientRepository.addPurchaseIdToList(purchase, id);
+
         Client client = clientRepository.findById(id);
 
         String name = client.getName();
+
 
         PurchaseOutputDTO dto = new PurchaseOutputDTO();
         dto.convert(purchase, name);
@@ -58,5 +57,14 @@ public class PurchaseController {
                 .toUri();
 
         return ResponseEntity.created(uri).body(dto);
+    }
+
+    @GetMapping("/api/v1/cart")
+    public ResponseEntity<PurchaseOutputDTO> returnHistoryOfPurchases(@RequestParam String idclient) {
+
+        PurchaseOutputDTO dto = new PurchaseOutputDTO();
+        PurchaseOutputDTO result = dto.convert(Long.valueOf(idclient));
+
+        return ResponseEntity.ok(result);
     }
 }
