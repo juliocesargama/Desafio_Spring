@@ -28,4 +28,8 @@ public class ClientService {
     public List<Client> findByUf(UF uf) {
         return repository.findByUf(uf);
     }
+
+    public Client findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
 }

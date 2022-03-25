@@ -3,15 +3,13 @@ package br.com.meli.Desafio_Spring.controller;
 import br.com.meli.Desafio_Spring.dto.PurchaseArticleDTO;
 import br.com.meli.Desafio_Spring.dto.PurchaseOutputDTO;
 import br.com.meli.Desafio_Spring.dto.RequestPurchaseDTO;
-import br.com.meli.Desafio_Spring.entity.Article;
+import br.com.meli.Desafio_Spring.entity.Client;
 import br.com.meli.Desafio_Spring.entity.Purchase;
-import br.com.meli.Desafio_Spring.entity.ShoppingCart;
 import br.com.meli.Desafio_Spring.repository.ClientRepository;
 import br.com.meli.Desafio_Spring.service.PurchaseService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,7 +46,9 @@ public class PurchaseController {
         clientRepository.addPurchaseIdToList(purchase, id);
 
         clientRepository.addPurchaseIdToList(purchase, id);
-        String name = clientRepository.findById(id);
+        Client client = clientRepository.findById(id);
+
+        String name = client.getName();
 
         PurchaseOutputDTO dto = new PurchaseOutputDTO();
         dto.convert(purchase, name);

@@ -22,13 +22,18 @@ public class ClientController {
     @PostMapping("/insert-client-request")
     public ResponseEntity<ClientDTO> createClients(@RequestBody @Valid ClientDTO clientDTO) {
 
+        Client clientbyEmail = clientService.findByEmail(clientDTO.getEmail());
+
+        if(clientbyEmail != null)
+            return new ResponseEntity("Usuário já cadastrado", HttpStatus.BAD_REQUEST);
+
         Client client = clientService.save(clientDTO.convertToEntity());
 
         return new ResponseEntity(new ClientDTO(client), HttpStatus.CREATED);
     }
 
     @GetMapping("/clients")
-    public ResponseEntity<List<Client>> getClients(@RequestParam UF uf) {
+    public ResponseEntity<List<Client>> getClients(@RequestParam(required = false) UF uf) {
         List<Client> clientes;
         clientes = uf != null ?  clientService.findByUf(uf) : clientService.findAll();
 
