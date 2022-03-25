@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ArticleRepository {
@@ -44,5 +45,10 @@ public class ArticleRepository {
     public Article getById(Article article) {
         return articles.stream().filter(a -> a.getProductId() == article.getProductId())
                 .findFirst().orElse(null);
+    }
+
+    public Article update(Article article, int i) {
+        articles.set(i, article);
+        return article;
     }
 }
