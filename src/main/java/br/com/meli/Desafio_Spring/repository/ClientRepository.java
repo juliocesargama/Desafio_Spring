@@ -68,4 +68,5 @@ public class ClientRepository {
                                 .findFirst().orElseThrow(() -> new EntityNotFoundException("Id not found " + id));
         return client.getName();
     }
+
 }

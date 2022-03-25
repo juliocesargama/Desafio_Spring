@@ -1,10 +1,12 @@
 package br.com.meli.Desafio_Spring.dto;
 
 import br.com.meli.Desafio_Spring.entity.Article;
+
 import br.com.meli.Desafio_Spring.entity.Purchase;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,6 +26,5 @@ public class PurchaseOutputDTO {
         this.total = purchase.getTotal();
         return this;
     }
-
 
 }

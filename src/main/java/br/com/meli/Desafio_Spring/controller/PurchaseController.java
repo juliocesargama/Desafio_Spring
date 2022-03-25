@@ -39,12 +39,13 @@ public class PurchaseController {
     public ResponseEntity<PurchaseOutputDTO> purchaseArticles(@RequestBody RequestPurchaseDTO purchaseArticleDTOS,
                                                               UriComponentsBuilder uriBuilder,
                                                               @RequestParam long id) {
-
+      
         List<PurchaseArticleDTO> PurchaseArticleDTO = purchaseArticleDTOS.getArticlesPurchaseRequest().stream()
                 .map(purchase -> modelMapper.map(purchase, PurchaseArticleDTO.class))
                 .collect(Collectors.toList());
 
         Purchase purchase = purchaseService.save(PurchaseArticleDTO);
+        clientRepository.addPurchaseIdToList(purchase, id);
 
         clientRepository.addPurchaseIdToList(purchase, id);
         String name = clientRepository.findById(id);
