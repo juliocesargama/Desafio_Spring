@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class ArticleRepository {
@@ -37,14 +36,28 @@ public class ArticleRepository {
     }
 
     public Article save(Article article) {
-        article.setProductId(articles.size() + 1);
-        articles.add(article);
+        Article articleFromRepo = getByNameCategoryBrand(article);
+        if (articleFromRepo == null) {
+            article.setProductId(articles.size() + 1);
+            articles.add(article);
+        } else {
+            articleFromRepo.setQuantity(articleFromRepo.getQuantity() + article.getQuantity());
+        }
         return article;
     }
 
     public Article getById(Article article) {
         return articles.stream().filter(a -> a.getProductId() == article.getProductId())
                 .findFirst().orElse(null);
+    }
+
+    public Article getByNameCategoryBrand(Article article) {
+        return articles.stream()
+                .filter(a -> a.getName().equalsIgnoreCase(article.getName()))
+                .filter(a -> a.getCategory().equalsIgnoreCase(article.getCategory()))
+                .filter(a -> a.getBrand().equalsIgnoreCase(article.getBrand()))
+                .findFirst()
+                .orElse(null);
     }
 
     public Article update(Article article, int i) {
