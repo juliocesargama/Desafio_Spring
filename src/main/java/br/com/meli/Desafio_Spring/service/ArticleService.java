@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,9 +73,9 @@ public class ArticleService {
         }
 
         if (params.get("order").get(0).equals("0")) {
-            return filterByAlphabetReverse(list);
-        } else if (params.get("order").get(0).equals("1")) {
             return filterByAlphabet(list);
+        } else if (params.get("order").get(0).equals("1")) {
+            return filterByAlphabetReverse(list);
         } else if (params.get("order").get(0).equals("2")) {
             return filterByHigherPrice(list);
         } else if (params.get("order").get(0).equals("3")) {
@@ -96,11 +98,15 @@ public class ArticleService {
     }
 
     public List<Article> filterByAlphabet(List<Article> list){
-        return list;
+        return list.stream()
+                .sorted(Comparator.comparing(Article::getName))
+                .collect(Collectors.toList());
     }
 
     public List<Article> filterByAlphabetReverse(List<Article> list){
-        return list;
+        return list.stream()
+        .sorted(Comparator.comparing(Article::getName).reversed())
+        .collect(Collectors.toList());
     }
 
 }
