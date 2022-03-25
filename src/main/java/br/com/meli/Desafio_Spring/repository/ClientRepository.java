@@ -52,13 +52,21 @@ public class ClientRepository {
     }
 
     public Client findById(Long id){
-        List<Client> allClient = getAll();
-        List<Client> clientStream = allClient.stream().filter(client ->  client.getId() == id).collect(Collectors.toCollection(ArrayList::new));
+        List<Client> clientStream = getAll().stream().filter(client ->  client.getId() == id).collect(Collectors.toCollection(ArrayList::new));
 
         if(clientStream.size() == 0)
             new EntityNotFoundException("Id not found " + id);
 
         return clientStream.get(0);
+    }
+
+    public Client findByEmail(String email){
+        List<Client> clientStream = getAll().stream().filter(client ->  client.getEmail().compareTo(email) == 0).collect(Collectors.toCollection(ArrayList::new));
+
+        if(clientStream.size() > 0)
+            return clientStream.get(0);
+
+        return null;
     }
 
 
