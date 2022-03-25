@@ -1,6 +1,7 @@
 package br.com.meli.Desafio_Spring.controller;
 
 import br.com.meli.Desafio_Spring.dto.PurchaseArticleDTO;
+import br.com.meli.Desafio_Spring.dto.PurchaseOutputDTO;
 import br.com.meli.Desafio_Spring.dto.RequestPurchaseDTO;
 import br.com.meli.Desafio_Spring.entity.Article;
 import br.com.meli.Desafio_Spring.entity.Purchase;
@@ -33,7 +34,7 @@ public class PurchaseController {
     private final ModelMapper modelMapper;
 
     @PostMapping("/api/v1/purchase-request")
-    public ResponseEntity<Purchase> purchaseArticles(@RequestBody RequestPurchaseDTO purchaseArticleDTOS,
+    public ResponseEntity<PurchaseOutputDTO> purchaseArticles(@RequestBody RequestPurchaseDTO purchaseArticleDTOS,
                                                      @RequestParam long id) {
 
         List<PurchaseArticleDTO> PurchaseArticleDTO = purchaseArticleDTOS.getArticlesPurchaseRequest().stream()
@@ -41,8 +42,13 @@ public class PurchaseController {
                 .collect(Collectors.toList());
 
         Purchase purchase = purchaseService.save(PurchaseArticleDTO);
-        clientRepository.addPurchaseIdToList(purchase, id);
 
-        return new ResponseEntity<Purchase>(purchase, HttpStatus.CREATED);
+        clientRepository.addPurchaseIdToList(purchase, id);
+        String name = clientRepository.findById(id);
+
+        PurchaseOutputDTO dto = new PurchaseOutputDTO();
+        dto.convert(purchase, name);
+
+        return new ResponseEntity<PurchaseOutputDTO>(dto, HttpStatus.CREATED);
     }
 }
