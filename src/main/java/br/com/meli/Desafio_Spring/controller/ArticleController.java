@@ -1,7 +1,7 @@
 package br.com.meli.Desafio_Spring.controller;
 
 import br.com.meli.Desafio_Spring.dto.ArticleDTO;
-
+import br.com.meli.Desafio_Spring.dto.ArticleOutputDTO;
 import br.com.meli.Desafio_Spring.dto.RequestArticleDTO;
 import br.com.meli.Desafio_Spring.dto.ResponseArticleDTO;
 import br.com.meli.Desafio_Spring.entity.Article;
@@ -49,11 +49,10 @@ public class ArticleController {
 
     @GetMapping("/articles")
     @ResponseBody
-    public List<Article> getByFilters(@RequestParam MultiValueMap<String, String> params) {
+    public ResponseEntity<List<ArticleOutputDTO>> getByFilters(@RequestParam MultiValueMap<String, String> params) {
 
-        List<Article> articles = articleService.searchArticlesByFilters(params);
-
-        return articles;
+        List<ArticleOutputDTO> result = new ArticleOutputDTO().convert(articleService.searchArticlesByFilters(params));
+        return ResponseEntity.ok(result);
     
     }
 
