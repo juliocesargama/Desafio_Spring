@@ -3,6 +3,7 @@ package br.com.meli.Desafio_Spring.service;
 import br.com.meli.Desafio_Spring.dto.PurchaseArticleDTO;
 import br.com.meli.Desafio_Spring.entity.Article;
 import br.com.meli.Desafio_Spring.entity.Purchase;
+import br.com.meli.Desafio_Spring.exception.EntityNotFoundException;
 import br.com.meli.Desafio_Spring.exception.MissingArticleQuantityException;
 import br.com.meli.Desafio_Spring.repository.ArticleRepository;
 import br.com.meli.Desafio_Spring.repository.PurchaseRepository;
@@ -55,7 +56,7 @@ public class PurchaseService {
     public Article convert(PurchaseArticleDTO purchaseArticleDTO) {
         Article article = new Article(
                 articleRepository.getAll().stream().filter(a -> a.getProductId() == purchaseArticleDTO.getProductId())
-                .findFirst().get());
+                .findFirst().orElseThrow(() -> new EntityNotFoundException("Id not found " + purchaseArticleDTO.getProductId())));
 
         article.setQuantity(purchaseArticleDTO.getQuantity());
 
@@ -81,4 +82,5 @@ public class PurchaseService {
             updateArticleQuantity(a);
         }
     }
+
 }
