@@ -33,16 +33,9 @@ public class ClientRepository {
     }
 
     public Client save(Client client) {
-        List<Client> allClient;
-        try {
-            allClient = getAll();
-            client.setId(allClient.size() + 1);
-            allClient.add(client);
-            mapper.writeValue(new File(FILE_PATH), allClient);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return client;
+        Client clientSaved = client.getId() == null ? create(client) : update(client);
+
+        return clientSaved;
     }
 
     public List<Client> findByUf(UF uf) {
@@ -52,21 +45,52 @@ public class ClientRepository {
         return clientStream;
     }
 
-    public void addPurchaseIdToList(Purchase purchase, long idCliente){
-        Client client = clients.stream()
-                        .filter(a -> a.getId() == idCliente)
-                        .findFirst().orElseThrow(() -> new EntityNotFoundException("Id not found " + idCliente));
-        if (client.getIdList() == null){
-            client.setIdList(new ArrayList<>());
-        }
-        client.getIdList().add((Long) purchase.getId());
+    public void addPurchaseIdToList(Purchase purchase, Long id){
+        Client client = findById(id);
+        client.getIdList().add(purchase.getId());
+        save(client);
     }
 
-    public String findById(long id){
-        Client client = clients.stream()
-                                .filter(a -> a.getId() == id)
-                                .findFirst().orElseThrow(() -> new EntityNotFoundException("Id not found " + id));
-        return client.getName();
+    public Client findById(Long id){
+        List<Client> allClient = getAll();
+        List<Client> clientStream = allClient.stream().filter(client ->  client.getId() == id).collect(Collectors.toCollection(ArrayList::new));
+
+        if(clientStream.size() == 0)
+            new EntityNotFoundException("Id not found " + id);
+
+        return clientStream.get(0);
+    }
+
+
+    public Client update(Client client){
+        List<Client> allClient = getAll();
+
+        ArrayList<Client> collect = allClient.stream().map(clientBanco -> {
+            if (clientBanco.getId() == client.getId()) {
+                clientBanco = client;
+            }
+            return clientBanco;
+        }).collect(Collectors.toCollection(ArrayList::new));
+
+        escreverArquivo(collect);
+        return client;
+    }
+
+    public Client create(Client client){
+        List<Client> allClient = getAll();
+        client.setId((long) (allClient.size() + 1));
+        allClient.add(client);
+
+        escreverArquivo(allClient);
+        return client;
+    }
+
+    private void escreverArquivo(List<Client> allClient) {
+        try {
+            mapper.writeValue(new File(FILE_PATH), allClient);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

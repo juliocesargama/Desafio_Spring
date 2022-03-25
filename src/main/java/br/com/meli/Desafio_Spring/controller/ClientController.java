@@ -28,7 +28,7 @@ public class ClientController {
     }
 
     @GetMapping("/clients")
-    public ResponseEntity<List<Client>> getClients(@RequestParam UF uf) {
+    public ResponseEntity<List<Client>> getClients(@RequestParam(required = false) UF uf) {
         List<Client> clientes;
         clientes = uf != null ?  clientService.findByUf(uf) : clientService.findAll();
 
