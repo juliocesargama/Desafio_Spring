@@ -61,6 +61,7 @@ public class PurchaseController {
     }
 
     @GetMapping("/api/v1/cart")
+
     public ResponseEntity<CartDTO> returnHistoryOfPurchases(@RequestParam String idclient) {
 
         CartDTO dto = new CartDTO();
