@@ -61,4 +61,12 @@ public class ClientRepository {
         }
         client.getIdList().add((Long) purchase.getId());
     }
+
+    public String findById(long id){
+        Client client = clients.stream()
+                                .filter(a -> a.getId() == id)
+                                .findFirst().orElseThrow(() -> new EntityNotFoundException("Id not found " + id));
+        return client.getName();
+    }
+
 }
