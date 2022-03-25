@@ -47,10 +47,8 @@ public class ArticleRepository {
                 .findFirst().orElse(null);
     }
 
-    // sends new product to end of list
     public Article update(Article article, int i) {
-        articles.remove(i);
-        articles.add(article);
+        articles.set(i, article);
         return article;
     }
 }
