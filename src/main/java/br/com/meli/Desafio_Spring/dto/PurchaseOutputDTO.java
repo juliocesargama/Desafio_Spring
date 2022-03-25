@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +25,8 @@ public class PurchaseOutputDTO {
 
     private String clientName;
     private List<Article> articles;
-    private List<Purchase> purchases;
     private BigDecimal total;
 
-    @Autowired
-    ClientRepository clientRepository;
-
-    @Autowired
-    PurchaseService purchaseService;
 
     public PurchaseOutputDTO convert(Purchase purchase, String name){
         this.clientName = name;
@@ -42,14 +35,5 @@ public class PurchaseOutputDTO {
         return this;
     }
 
-    public PurchaseOutputDTO convert(Long idClient){
-        this.clientName = clientRepository.findById(idClient).getName();
-        this.purchases = purchaseService.returnPurchasesByIdClient(idClient);
-        this.total = BigDecimal.valueOf(articles.stream()
-                    .mapToDouble(article -> article.getPrice().doubleValue() * article.getQuantity().doubleValue())
-                    .sum());
-
-        return this;
-    }
 
 }

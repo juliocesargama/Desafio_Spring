@@ -1,5 +1,6 @@
 package br.com.meli.Desafio_Spring.controller;
 
+import br.com.meli.Desafio_Spring.dto.CartDTO;
 import br.com.meli.Desafio_Spring.dto.PurchaseArticleDTO;
 import br.com.meli.Desafio_Spring.dto.PurchaseOutputDTO;
 import br.com.meli.Desafio_Spring.dto.RequestPurchaseDTO;
@@ -60,10 +61,11 @@ public class PurchaseController {
     }
 
     @GetMapping("/api/v1/cart")
-    public ResponseEntity<PurchaseOutputDTO> returnHistoryOfPurchases(@RequestParam String idclient) {
 
-        PurchaseOutputDTO dto = new PurchaseOutputDTO();
-        PurchaseOutputDTO result = dto.convert(Long.valueOf(idclient));
+    public ResponseEntity<CartDTO> returnHistoryOfPurchases(@RequestParam String idclient) {
+
+        CartDTO dto = new CartDTO();
+        CartDTO result = dto.convert(Long.valueOf(idclient), clientRepository, purchaseService);
 
         return ResponseEntity.ok(result);
     }
